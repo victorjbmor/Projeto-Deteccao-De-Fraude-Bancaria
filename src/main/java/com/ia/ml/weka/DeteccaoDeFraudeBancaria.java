@@ -49,5 +49,15 @@ public class DeteccaoDeFraudeBancaria {
 		atributos.add(atributoValor);
 		atributos.add(atributoOrigem);
 		atributos.add(atributoFraude);
+		
+		// ========================
+		// ETAPA 3: CRIACAO DO DATASET (estrutura base da planilha)
+		// ========================
+		
+		// Cria o dataset chamado "transacoes" com os atributos definidos. Comeca vazio (0 linhas)
+		dadosTreinamento = new Instances("transacoes", atributos, 0); 
+		
+		// Define o ultimo atributo ("fraude") como classe alvo para a previsao
+		dadosTreinamento.setClassIndex(dadosTreinamento.numAttributes() - 1);
 	}
 }
