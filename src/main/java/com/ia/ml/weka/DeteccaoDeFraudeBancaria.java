@@ -5,6 +5,7 @@ package com.ia.ml.weka;
 // =======================
 
 import weka.classifiers.Classifier; //Interface que define metodos obrigatorios para algoritmos de classificacao
+import weka.classifiers.trees.J48;
 import weka.classifiers.trees.j48.*; // Algorito de decisao que aprende a responder
 
 import weka.core.Attribute; // Representa uma coluna dos dados (ex: "valor", "origem")
@@ -101,6 +102,11 @@ public class DeteccaoDeFraudeBancaria {
 		//adicionarTransacao(1000, "nacional", "sim");
 		//adicionarTransacao(1500, "nacional", "sim");
 		//adicionarTransacao(20000, "nacional", "sim");
+	}
+	
+	public void treinarModelo() throws Exception {
+		classificador = new J48(); // Cria modelo decisao chamado J48 (metodo matematico)
+		classificador.buildClassifier(dadosTreinamento); // Treina o modelo com os dados fornecidos
 	}
 	
 	
