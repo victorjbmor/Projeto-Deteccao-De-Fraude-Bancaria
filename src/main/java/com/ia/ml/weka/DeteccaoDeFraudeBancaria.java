@@ -109,7 +109,25 @@ public class DeteccaoDeFraudeBancaria {
 		classificador.buildClassifier(dadosTreinamento); // Treina o modelo com os dados fornecidos
 	}
 	
+	// ====================
+	// ETAPA 6: CLASSIFICACAO DE NOVAS TRANSACOES\
+	// ====================
 	
+	public String classificarTransacao(double valor, String origem) throws Exception {
+		// Cria uma nova transacao para prever se e fraude ou nao
+		Instance novaInstancia = new DenseInstance(dadosTreinamento.numAttributes());
+		novaInstancia.setDataset(dadosTreinamento);
+		novaInstancia.setValue(atributoValor, valor);
+		novaInstancia.setValue(atributoOrigem, origem);
+		
+		// Pedir para o classificador prever se a nova transcao e fraude ou nao
+		// O resultado sera 0.0 (nao e fraude) ou 1.0 (e fraude), conforme o treinamento
+		double previsao = classificador.classifyInstance(novaInstancia);
+		/* Obs: classifyInstance retorna numero decimal porque usa o mesmo metodo para prever classes e numeros */
+		
+		// Transformar o numero previsto em texto (ex: 0 "nao", 1 "sim") e monta a resposta final
+		return "Fraude: " + dadosTreinamento.classAttribute().value((int) previsao);
+	}
 	
 	
 }
