@@ -29,5 +29,25 @@ public class DeteccaoDeFraudeBancaria {
 	private Attribute atributoOrigem;
 	private Attribute atributoFraude;
 	
+	// =================
+	// ETAPA 2: DEFINICAO DOS ATRIBUTOS (colunas da "planilha")
 	
+	public void definirAtributos() {
+		atributoValor = new Attribute("valor"); // valor da transacao
+		
+		ArrayList<String> valoresOrigem = new ArrayList<>();
+		valoresOrigem.add("internacional");
+		valoresOrigem.add("nacional");
+		atributoOrigem = new Attribute("origem", valoresOrigem); // Origem da transacao
+		
+		ArrayList<String> valoresFraude = new ArrayList<>();
+		valoresFraude.add("nao");
+		valoresFraude.add("sim");
+		atributoFraude = new Attribute("fraude", valoresFraude); // rotulo: se é fraude ou nao
+		
+		ArrayList<Attribute> atributos = new ArrayList<>();
+		atributos.add(atributoValor);
+		atributos.add(atributoOrigem);
+		atributos.add(atributoFraude);
+	}
 }
