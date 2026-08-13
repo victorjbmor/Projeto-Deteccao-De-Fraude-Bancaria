@@ -5,8 +5,8 @@ package com.ia.ml.weka;
 // =======================
 
 import weka.classifiers.Classifier; //Interface que define metodos obrigatorios para algoritmos de classificacao
-import weka.classifiers.trees.J48;
-import weka.classifiers.trees.j48.*; // Algorito de decisao que aprende a responder
+import weka.classifiers.trees.J48; // Algorito de decisao que aprende a responder
+
 
 import weka.core.Attribute; // Representa uma coluna dos dados (ex: "valor", "origem")
 import weka.core.Instance; // Representa uma linha de dados (como uma linha do Excel)
@@ -99,9 +99,9 @@ public class DeteccaoDeFraudeBancaria {
 		// Transacoes com valores medios/altos em territorio nacional
 		// Pode ser usado para demonstrar variacao ou desafiar o modelo
 		
-		//adicionarTransacao(1000, "nacional", "sim");
-		//adicionarTransacao(1500, "nacional", "sim");
-		//adicionarTransacao(20000, "nacional", "sim");
+		adicionarTransacao(1000, "nacional", "sim");
+		adicionarTransacao(1500, "nacional", "sim");
+		adicionarTransacao(20000, "nacional", "sim");
 	}
 	
 	public void treinarModelo() throws Exception {
@@ -129,5 +129,51 @@ public class DeteccaoDeFraudeBancaria {
 		return "Fraude: " + dadosTreinamento.classAttribute().value((int) previsao);
 	}
 	
+	// ========================
+	// TESTE COMPLETO DO PROCESSO DE ML
+	// ========================
+	
+	public static void main(String[] args) {
+		// Oculta avisos sobre bibliotecas nativas (nao afetam o funcionamento)
+		Logger.getLogger("com.github.fommil.netlib").setLevel(Level.SEVERE);
+		
+		// Criacao do detector
+		DeteccaoDeFraudeBancaria detector = new DeteccaoDeFraudeBancaria();
+		
+		try {
+			// ============
+			// ETAPA 2 - Definir atributos
+			detector.definirAtributos();
+			// ETAPA 4 - Adicionar exemplos
+			detector.adicionarExemplos();
+			// ETAPA 5 - Treinar modelo
+			detector.treinarModelo();
+			
+			//ETAPA 6 - Classificar novas transacoes
+			String resultado1 = detector.classificarTransacao(5000, "internacional");
+			String resultado2 = detector.classificarTransacao(200, "nacional");
+			String resultado3 = detector.classificarTransacao(10000, "internacional");
+			String resultado4 = detector.classificarTransacao(150, "nacional");
+			String resultado5 = detector.classificarTransacao(7500, "internacional");
+			String resultado6 = detector.classificarTransacao(300, "nacional");
+			String resultado7 = detector.classificarTransacao(8000, "internacional");
+			String resultado8 = detector.classificarTransacao(400, "nacional");
+			String resultado9 = detector.classificarTransacao(1000, "nacional");
+			
+			// Impressao dos Resultados
+			System.out.println("Teste 1: " + resultado1);
+			System.out.println("Teste 2: " + resultado2);
+			System.out.println("Teste 3: " + resultado3);
+			System.out.println("Teste 4: " + resultado4);
+			System.out.println("Teste 5: " + resultado5);
+			System.out.println("Teste 6: " + resultado6);
+			System.out.println("Teste 7: " + resultado7);
+			System.out.println("Teste 8: " + resultado8);
+			System.out.println("Teste 9: " + resultado9);
+		
+		} catch(Exception e) {
+			System.err.println("Erro ao classificar a transacao: " + e.getMessage());
+		}
+	}
 	
 }
